@@ -1,4 +1,4 @@
-# Zach's Game of Life
+# Zach's Terrain Generator
 
 Description coming.
 
@@ -6,4 +6,4 @@ Description coming.
 - Zachary McNellis
 
 ## Notes
-View at https://zachgameoflife.herokuapp.com/
+View at https://zach-terrain-generator.herokuapp.com/

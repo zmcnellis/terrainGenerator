@@ -99,7 +99,13 @@ var Manager = function() {
   };
 
   this.index = function(i, j) {
-    return i+513*j;
+    if (i < 0) {
+      i += 513;
+    }
+    if (j < 0) {
+      j += 513;
+    }
+    return (i%513)+513*(j%513);
   };
 
   this.init = function() {
@@ -116,8 +122,8 @@ var Manager = function() {
     var random_scale = 1.0;
 
     while (step_size > 1) {
-      for (var i=0; i<513-1; i+=step_size) {
-        for (var j=0; j<513-1; j+=step_size) {
+      for (var i=0; i<513; i+=step_size) {
+        for (var j=0; j<513; j+=step_size) {
           this.diamond_step(i, j, step_size, random_scale);
           this.square_step(i, j, step_size, random_scale);
         }
@@ -140,10 +146,19 @@ var Manager = function() {
   }
 
   this.square_step = function(i, j, step_size, random_scale) {
-    var avg_top = (display_map[this.index(i, j)] + display_map[this.index(i + step_size, j)] + display_map[this.index(i + step_size/2, j + step_size/2)]) / 3.0;
-    var avg_left = (display_map[this.index(i, j)] + display_map[this.index(i, j + step_size)] + display_map[this.index(i + step_size/2, j + step_size/2)]) / 3.0;
-    var avg_right = (display_map[this.index(i + step_size, j)] + display_map[this.index(i + step_size, j + step_size)] + display_map[this.index(i + step_size/2, j + step_size/2)]) / 3.0;
-    var avg_bottom = (display_map[this.index(i, j + step_size)] + display_map[this.index(i + step_size, j + step_size)] + display_map[this.index(i + step_size/2, j + step_size/2)]) / 3.0;
+    var offset_x = 0;
+    var offset_y = 0;
+    if (i + step_size/2 > 512 || i - step_size/2 < 0) {
+      offset_x = 1;
+    }
+    if (j + step_size/2 > 512 || j - step_size/2 < 0) {
+      offset_y = 1;
+    }
+
+    var avg_top = (display_map[this.index(i, j)] + display_map[this.index(i + step_size, j)] + display_map[this.index(i + step_size/2, j + step_size/2)] + display_map[this.index(i + step_size/2, j - step_size/2 - offset_y)]) / 4.0;
+    var avg_left = (display_map[this.index(i, j)] + display_map[this.index(i, j + step_size)] + display_map[this.index(i + step_size/2, j + step_size/2)] + display_map[this.index(i - step_size/2 - offset_x, j + step_size/2)]) / 4.0;
+    var avg_right = (display_map[this.index(i + step_size, j)] + display_map[this.index(i + step_size, j + step_size)] + display_map[this.index(i + step_size/2, j + step_size/2)] + display_map[this.index(i + step_size + step_size/2 + offset_x, j + step_size/2)]) / 4.0;
+    var avg_bottom = (display_map[this.index(i, j + step_size)] + display_map[this.index(i + step_size, j + step_size)] + display_map[this.index(i + step_size/2, j + step_size/2)] + display_map[this.index(i + step_size/2, j + step_size + step_size/2 + offset_y)]) / 4.0;
 
     display_map[this.index(i + step_size/2, j)] = avg_top + this.get_random(random_scale);
     display_map[this.index(i, j + step_size/2)] = avg_left + this.get_random(random_scale);
