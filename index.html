@@ -10,22 +10,22 @@
     <br/>
 
     <div id="controls">
-      <button id="pause">Pause</button>
-      <input type="radio" name="brush" value="life" checked>Diamond Square</input>
-      <input type="radio" name="brush" value="death" disabled>Midpoint Displacement</input>
-      <button id="clear">Restart</button>
+      <button id="about" disabled>About</button>
+      <button id="reset">Generate</button>
+      <input type="radio" name="algorithm" value="diamondSquare" checked>Diamond Square</input>
+      <input type="radio" name="algorithm" value="midpointDisplacment">Midpoint Displacement</input>
       <br/>
-      <input type="radio" name="brush" value="death" disabled>Perlin Noise</input>
-      <input type="radio" name="brush" value="death" disabled>Simplex Noise</input>
+      <input type="radio" name="algorithm" value="perlinNoise" disabled>Perlin Noise</input>
+      <input type="radio" name="algorithm" value="simplexNoise" disabled>Simplex Noise</input>
       <br/>
-      <div style="text-align: left">
-      Seed <input type="text" name="seed" size="10" maxlength="20"></input>
-      </div>
-      <!--<input type="range" name="speed" min="1" max="100"></input>-->
+      <br/>
+      <input type="text" name="seed" size="6" maxlength="20" placeholder="Seed"></input>
     </div>
 
     <script src="scripts/jquery-3.1.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/seedrandom/2.4.3/seedrandom.min.js"></script>
+    <script src="scripts/seedrandom.min.js"></script>
+    <script src="scripts/diamondSquare.js"></script>
     <script src="scripts/terrainGenerator.js"></script>
+    <script src="scripts/midpointDisplacement.js"></script>
   </body>
 </html>

@@ -16,7 +16,7 @@ canvas {
 }
 
 button {
-  width: 60px;
+  width: 70px;
   height: 20px;
 }
 
@@ -27,12 +27,12 @@ button {
   margin-left: -258px;
 }
 
-#clear {
+#reset {
   right: 0;
   position: absolute;
 }
 
-#pause {
+#about {
   left: 0;
   position: absolute;
 }
