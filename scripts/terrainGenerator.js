@@ -62,6 +62,19 @@ $(document).ready(function() {
     var ONE_TIME_FRAME = 1000.0 / 60.0 / speed;
     interval = setInterval(animation_step, ONE_TIME_FRAME);
   });
+  $('input[name=seed]').change(function() {
+    var val = $(this).val();
+    if (isNaN(val)) {
+      var seed = Math.floor(Math.random() * 1000000000);
+      Math.seedrandom(seed.toString());
+      $(this).val(seed);
+    }
+    else {
+      Math.seedrandom(val.toString());
+      $(this).val(val);
+    }
+    manager.resetDrawing(true);
+  });
 
   var animation_step = function() {
     if (running) {
@@ -78,7 +91,7 @@ $(document).ready(function() {
 var Manager = function() {
   var display_map = [];
 
-  this.resetDrawing = function() {
+  this.resetDrawing = function(hasSeed = false) {
     console.log("in Manager::resetDrawing");
 
     var size = 513*513;
@@ -88,10 +101,16 @@ var Manager = function() {
       display_map[i] = 0.0;
     }
 
-    display_map[this.index(0, 0)] = Math.random();
-    display_map[this.index(512, 0)] = Math.random();
-    display_map[this.index(0, 512)] = Math.random();
-    display_map[this.index(512, 512)] = Math.random();
+    if (!hasSeed) {
+      var seed = Math.floor(Math.random() * 1000000000);
+      Math.seedrandom(seed.toString());
+      $('input[name=seed]').val(seed);
+    }
+
+    display_map[this.index(0, 0)] = this.get_random(1, false);
+    display_map[this.index(512, 0)] = this.get_random(1, false);
+    display_map[this.index(0, 512)] = this.get_random(1, false);
+    display_map[this.index(512, 512)] = this.get_random(1, false);
 
     this.propagate();
     this.display();
@@ -114,7 +133,7 @@ var Manager = function() {
     display_map = new Array(size);
 
     // generate new random board
-    this.resetDrawing();
+    this.resetDrawing(false);
   };
 
   this.propagate = function() {
@@ -143,7 +162,7 @@ var Manager = function() {
     ) / 4.0;
 
     display_map[this.index(i + step_size/2, j + step_size/2)] = avg + this.get_random(random_scale);
-  }
+  };
 
   this.square_step = function(i, j, step_size, random_scale) {
     var offset_x = 0;
@@ -164,12 +183,16 @@ var Manager = function() {
     display_map[this.index(i, j + step_size/2)] = avg_left + this.get_random(random_scale);
     display_map[this.index(i + step_size, j + step_size/2)] = avg_right + this.get_random(random_scale);
     display_map[this.index(i + step_size/2, j + step_size)] = avg_bottom + this.get_random(random_scale);
-  }
+  };
 
-  this.get_random = function(scale) {
-    var rand = (Math.random() >= 0.5) ? Math.random() * scale : Math.random() * -1 * scale;
-    return rand;
-  }
+  this.get_random = function(scale, allowNegatives = true) {
+    if (allowNegatives === true) {
+      return (Math.random() >= 0.5) ? Math.random() * scale : Math.random() * -1 * scale;
+    }
+    else {
+      return Math.random() * scale;
+    }
+  };
 
   this.dabSomePaint = function(x, y) {
     console.log("in Manager::dabSomePaint");
