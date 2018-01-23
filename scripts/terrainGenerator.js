@@ -31,6 +31,9 @@ $(document).ready(function() {
     else {
       algorithm = simplexNoise;
     }
+    algorithm.init();
+    algorithm.propagate();
+    algorithm.display();
   });
 
   $('input[name=seed]').change(function() {
@@ -62,7 +65,7 @@ var Manager = function() {
     console.log("in Manager::init");
 
     diamondSquare = new DiamondSquare();
-    midpointDisplacement = new DiamondSquare();
+    midpointDisplacement = new MidpointDisplacement();
     perlinNoise = new DiamondSquare();
     simplexNoise = new DiamondSquare();
 

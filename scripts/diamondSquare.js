@@ -1,6 +1,6 @@
 "use strict";
 
-// Manager class
+// Diamond Square class
 var DiamondSquare = function() {
   var display_map = [];
 
