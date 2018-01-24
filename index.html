@@ -1,16 +1,18 @@
 <!DOCTYPE HTML>
 <html>
   <head>
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="styles/terrainGenerator.css" />
     <title>Terrain Generator</title>
   </head>
   <body>
+   <div id="page-mask"></div> 
     <h1>Zach's Terrain Generator</h1>
     <canvas id="canvas" width="513" height="513"></canvas>
     <br/>
 
     <div id="controls">
-      <button id="about" disabled>About</button>
+      <button id="about">About</button>
       <button id="reset">Generate</button>
       <input type="radio" name="algorithm" value="diamondSquare" checked>Diamond Square</input>
       <input type="radio" name="algorithm" value="midpointDisplacement">Midpoint Displacement</input>
@@ -20,6 +22,16 @@
       <br/>
       <br/>
       <input type="text" name="seed" size="6" maxlength="20" placeholder="Seed"></input>
+    </div>
+
+    <div id="modal">
+      <div id="modal-header">Title</div>
+      <div id="modal-body">
+        <p>Text goes here.</p>
+      </div>
+      <div id="modal-footer">
+        <div class="modal-button modal-close">OK</div>
+      </div>
     </div>
 
     <script src="scripts/jquery-3.1.1.min.js"></script>
