@@ -60,7 +60,7 @@ var Manager = function() {
   this.resetDrawing = function(hasSeed = false) {
     console.log("in Manager::resetDrawing");
 
-    algorithm.resetDrawing();
+    algorithm.resetDrawing(hasSeed);
     algorithm.propagate();
     algorithm.display();
   };
