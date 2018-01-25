@@ -70,7 +70,7 @@ var Manager = function() {
 
     diamondSquare = new DiamondSquare();
     midpointDisplacement = new MidpointDisplacement();
-    perlinNoise = new DiamondSquare();
+    perlinNoise = new PerlinNoise();
     simplexNoise = new DiamondSquare();
 
     algorithm = diamondSquare;
