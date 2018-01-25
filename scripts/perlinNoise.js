@@ -111,13 +111,19 @@ var PerlinNoise = function() {
 
   this.propagate = function() {
 
-    var ran = Math.random() * 999999;
+    var ran = 40 + Math.random() * (150 - 40);
+        var A = 0.2 + Math.random() * (0.8 - 0.2);
+        var B = 0.2 + Math.random() * (0.8 - 0.2);
+        var C = 0.2 + Math.random() * (0.8 - 0.2);
     for (var i=1; i<513-1; i++) {
       for (var j=1; j<513-1; j++) {
+        /*
         var noise = 
           this.noise(i * (1.0 / 273.0) + ran, j * (1.0 / 273.0) + ran)
           + this.noise(i * (1.0 / 67.0) + ran, j * (1.0 / 67.0) + ran)
           + this.noise(i * (1.0 / 18.0) + ran, j * (1.0 / 18.0) + ran);
+        */
+
         //var noise = this.noise(i * (1.0 / 37.0) + ran, j * (1.0 / 37.0) + ran);
         /*
         var noise = 
@@ -125,9 +131,18 @@ var PerlinNoise = function() {
           + 0.50 * this.noise(2 * i * (1.0 / 513.0), 2 * j * (1.0 / 513.0))
           + 0.25 * this.noise(4 * i * (1.0 / 513.0), 4 * j * (1.0 / 513.0));
         */
-        var noise_mapped = (1.0 / 6.0) * (noise + 3);
-        display_map[this.index(i, j)] = noise_mapped;
+        //var noise_mapped = (1.0 / 6.0) * (noise + 3);
+        //display_map[this.index(i, j)] = noise_mapped;
         //display_map[this.index(i, j)] = Math.pow(noise_mapped, 1.25);
+
+
+        var nx = i / ran + 0.5;
+        var ny = j / ran + 0.5;
+        var n = A * this.noise((1/A) * nx, (1/A) * ny) 
+          + B * this.noise((1/B) * nx, (1/B) * ny)
+          + C * this.noise((1/C) * nx, (1/C) * ny);
+        var n_mapped = n.map(-1, 1, 0, 1);
+        display_map[this.index(i, j)] = n_mapped;
       }
     }
 
@@ -142,6 +157,14 @@ var PerlinNoise = function() {
     var j = 0;
     for (var i = 0; i < imageData.data.length; i += 4) {
       var val = display_map[j];
+
+
+      /*
+      imageData.data[i] = val * 255;
+      imageData.data[i+1] = val * 255;
+      imageData.data[i+2] = val * 255;
+      imageData.data[i+3] = 255;
+      */
 
       /*
       if (val < 0.45) {
@@ -161,11 +184,12 @@ var PerlinNoise = function() {
 
 
       
+      /*
       // water
-      if (val < 0.35) {
+      if (val < 0.45) {
         imageData.data[i] = 64.0;
         imageData.data[i+1] = 96.0;
-        imageData.data[i+2] = 192.0;
+        imageData.data[i+2] = (1 - val) * 255.0;
         imageData.data[i+3] = 255;
       }
       // beach
@@ -210,7 +234,22 @@ var PerlinNoise = function() {
         imageData.data[i+2] = 214.0;
         imageData.data[i+3] = 255;
       }
-      
+      */
+
+
+      // water
+      if (val < 0.45) {
+        imageData.data[i] = 64.0;
+        imageData.data[i+1] = 96.0;
+        imageData.data[i+2] = (val + 0.45) * 255.0;
+        imageData.data[i+3] = 255;
+      }
+      else {
+        imageData.data[i] = 10.0;
+        imageData.data[i+1] = val * 255.0;
+        imageData.data[i+2] = 50.0;
+        imageData.data[i+3] = 255;
+      }
 
       j++;
     }
@@ -218,4 +257,8 @@ var PerlinNoise = function() {
     context.clearRect(0, 0, 513, 513);
     context.putImageData(imageData, 0, 0);
   };
+};
+
+Number.prototype.map = function(in_min, in_max, out_min, out_max) {
+  return (this - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 };
