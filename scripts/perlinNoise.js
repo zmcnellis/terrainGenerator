@@ -48,10 +48,10 @@ var PerlinNoise = function() {
     X = X & 255;
     Y = Y & 255;
 
-    var gi00 = perm[X+perm[Y]] % 4;
-    var gi01 = perm[X+perm[Y+1]] % 4;
-    var gi10 = perm[X+1+perm[Y]] % 4;
-    var gi11 = perm[X+1+perm[Y+1]] % 4;
+    var gi00 = perm[X+perm[Y]] % 12;
+    var gi01 = perm[X+perm[Y+1]] % 12;
+    var gi10 = perm[X+1+perm[Y]] % 12;
+    var gi11 = perm[X+1+perm[Y+1]] % 12;
 
     var n00 = this.dot(grad3[gi00], x, y);
     var n01 = this.dot(grad3[gi01], x, y-1);
@@ -146,8 +146,6 @@ var PerlinNoise = function() {
         display_map[this.index(i, j)] = n_mapped;
       }
     }
-
-    console.log(display_map);
   };
 
   this.display = function() {

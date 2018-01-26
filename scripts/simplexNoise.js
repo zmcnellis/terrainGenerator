@@ -154,8 +154,6 @@ var SimplexNoise = function() {
         display_map[this.index(i, j)] = n_mapped;
       }
     }
-
-    console.log(display_map);
   };
 
   this.display = function() {
