@@ -112,9 +112,10 @@ var PerlinNoise = function() {
   this.propagate = function() {
 
     var ran = 40 + Math.random() * (150 - 40);
-        var A = 0.2 + Math.random() * (0.8 - 0.2);
-        var B = 0.2 + Math.random() * (0.8 - 0.2);
-        var C = 0.2 + Math.random() * (0.8 - 0.2);
+    var A = 0.2 + Math.random() * (0.8 - 0.2);
+    var B = 0.2 + Math.random() * (0.8 - 0.2);
+    var C = 0.2 + Math.random() * (0.8 - 0.2);
+
     for (var i=1; i<513-1; i++) {
       for (var j=1; j<513-1; j++) {
         /*

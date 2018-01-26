@@ -138,11 +138,18 @@ var SimplexNoise = function() {
 
   this.propagate = function() {
 
+    var ran = 40 + Math.random() * (150 - 40);
+    var A = 0.2 + Math.random() * (0.8 - 0.2);
+    var B = 0.2 + Math.random() * (0.8 - 0.2);
+    var C = 0.2 + Math.random() * (0.8 - 0.2);
+
     for (var i=1; i<513-1; i++) {
       for (var j=1; j<513-1; j++) {
-        var nx = i.map(0, 513, -1, 1);
-        var ny = j.map(0, 513, -1, 1);
-        var n = this.noise(nx, ny);
+        var nx = i / ran + 0.5;
+        var ny = j / ran + 0.5;
+        var n = A * this.noise((1/A) * nx, (1/A) * ny) 
+          + B * this.noise((1/B) * nx, (1/B) * ny)
+          + C * this.noise((1/C) * nx, (1/C) * ny);
         var n_mapped = n.map(-1, 1, 0, 1);
         display_map[this.index(i, j)] = n_mapped;
       }
