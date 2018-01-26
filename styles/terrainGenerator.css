@@ -4,14 +4,15 @@ body {
 }
 
 h1 {
-  font-weight: bold;
-  color: #666;
+  color: #737373;
+  font-family: 'Roboto', sans-serif; 
 }
 
 canvas {
-  border: 1px solid #666;
+  /*border: 1px solid #666;*/
   /*border-radius: 5px;*/
   /*padding: 50px;*/
+  border-radius: 2px 2px 0 0;
 }
 
 button {
@@ -34,6 +35,22 @@ button {
 #about {
   left: 0;
   position: absolute;
+}
+
+.col12 {
+  width: 100%;
+}
+
+.card {
+  display: inline-block;
+  border-radius: 2px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+  width: 513px;
+  height: 600px;
+}
+
+.card > .card-content {
+  margin-top: 0px;
 }
 
 /* modal */
